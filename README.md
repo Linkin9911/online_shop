@@ -1,0 +1,29 @@
+# Онлайн-магазин
+
+Учебный проект интернет-магазина на Django. Развивается в течение курса.
+
+## Установка
+
+1. Клонировать репозиторий: `git clone <url>`
+2. Создать виртуальное окружение: `python -m venv venv`
+3. Активировать: `source venv/bin/activate` (Linux/macOS) или `venv\Scripts\activate` (Windows)
+4. Установить зависимости: `pip install -r requirements.txt`
+5. Применить миграции: `python manage.py migrate`
+6. Запустить сервер: `python manage.py runserver`
+
+## Структура проекта
+
+- `config/` — настройки Django-проекта
+- `catalog/` — приложение каталога товаров
+- `templates/` — HTML-шаблоны
+
+## Маршруты
+
+- `/` — главная страница
+- `/contacts/` — страница контактов с формой обратной связи
+
+## GitFlow
+
+- `main` — стабильная ветка
+- `develop` — ветка разработки
+- `feature/*` — ветки для отдельных задач
