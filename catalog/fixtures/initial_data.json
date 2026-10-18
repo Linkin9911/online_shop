@@ -1,0 +1,21 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Одежда",
+      "description": "Футболки, джинсы, куртки"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Футболка базовая",
+      "description": "Белая футболка из хлопка",
+      "category": 1,
+      "price": "1500.00",
+      "image": ""
+    }
+  }
+]
