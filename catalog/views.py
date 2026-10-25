@@ -1,19 +1,14 @@
-from django.shortcuts import render
-from django.contrib import messages
-from .forms import ContactForm
-
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
+from .models import Product
 
 def home(request):
-    return render(request, 'catalog/home.html')
+    products = Product.objects.all()
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'catalog/home.html', {'page_obj': page_obj})
 
-
-def contacts(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            messages.success(request, f'Спасибо, {name}! Ваше сообщение отправлено.')
-    else:
-        form = ContactForm()
-    return render(request, 'catalog/contacts.html', {'form': form})
-
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'catalog/product_detail.html', {'product': product})
