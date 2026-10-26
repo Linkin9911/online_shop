@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Каталог товаров{% endblock %}
+
+{% block content %}
+    <h2>Все товары</h2>
+
+    <!-- Пример цикла, как требовалось в задании -->
+    {% for product in products %}
+        <div class="product-card">
+            <!-- Картинка обязательно через {{ MEDIA_URL }} -->
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description|truncatechars:100 }}</p>
+            <p>Цена: {{ product.price }} руб.</p>
+
+            <!-- Ссылка на детальную страницу -->
+            <a href="{{ product.get_absolute_url }}">Подробнее</a>
+        </div>
+    {% empty %}
+        <p>Товаров пока нет.</p>
+    {% endfor %}
+{% endblock %}

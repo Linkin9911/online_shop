@@ -36,4 +36,5 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[self.id, self.slug])
+        # Передаем ТОЛЬКО pk, так как в urls.py у тебя путь <int:pk>
+        return reverse('product_detail', kwargs={'pk': self.pk})

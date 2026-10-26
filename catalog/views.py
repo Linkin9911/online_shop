@@ -1,6 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from .models import Product
+from django.shortcuts import render, redirect
+from .forms import ProductForm
+
 
 def home(request):
     products = Product.objects.all()
@@ -12,3 +15,15 @@ def home(request):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'catalog/product_detail.html', {'product': product})
+
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)  # Важно: request.FILES для картинок!
+        if form.is_valid():
+            form.save()
+            return redirect('catalog')  # Перенаправляем обратно в каталог
+    else:
+        form = ProductForm()
+
+    return render(request, 'catalog/add_product.html', {'form': form})
