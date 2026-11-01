@@ -9,7 +9,12 @@
     {% for product in products %}
         <div class="product-card">
             <!-- Картинка обязательно через {{ MEDIA_URL }} -->
+            {% if product.image %}
             <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+    <!-- Заглушка, если картинки нет -->
+            <img src="https://via.placeholder.com/300x200?text=Нет+фото" alt="{{ product.name }}">
+            {% endif %}
             <h3>{{ product.name }}</h3>
             <p>{{ product.description|truncatechars:100 }}</p>
             <p>Цена: {{ product.price }} руб.</p>

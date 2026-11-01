@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <article>
+    <h1>{{ post.title }}</h1>
+    <p><small>Опубликовано: {{ post.created_at|date:"d.m.Y H:i" }} | Текущие просмотры: {{ post.views }}</small></p>
+
+    {% if post.preview_image %}
+      <img src="{{ post.preview_image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto; border-radius: 5px;">
+    {% endif %}
+
+    <hr>
+
+    <!-- Безопасный вывод HTML-контента -->
+    <div class="content-body">
+      {{ post.content|linebreaks }}
+    </div>
+  </article>
+
+  <br>
+  <a href="{% url 'blog_list' %}" class="btn">← Назад к списку</a>
+
+  <!-- Кнопки редактирования/удаления (видимы только админу или если есть проверка прав) -->
+  <a href="{% url 'blog_edit' post.pk %}" class="btn">Редактировать</a>
+  <a href="{% url 'blog_delete' post.pk %}" class="btn">Удалить</a>
+{% endblock %}

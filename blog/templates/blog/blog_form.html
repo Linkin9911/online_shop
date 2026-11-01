@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if post %}Редактировать: {{ post.title }}{% else %}Новая статья{% endif %} — Мой магазин
+{% endblock %}
+
+{% block content %}
+  <h1>{% if post %}Редактировать статью{% else %}Создать статью{% endif %}</h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        Пожалуйста, исправьте ошибки ниже.
+      </div>
+    {% endif %}
+
+    <!-- Поле: Заголовок -->
+    <div class="mb-3">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {% if form.title.errors %}
+        <div class="text-danger">{{ form.title.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Поле: Текст статьи -->
+    <div class="mb-3">
+      {{ form.content.label_tag }}
+      {{ form.content }}
+      {% if form.content.errors %}
+        <div class="text-danger">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Поле: Картинка -->
+    <div class="mb-3">
+      {{ form.preview_image.label_tag }}
+      {{ form.preview_image }}
+
+      {% if post and post.preview_image %}
+        <p class="mt-2 text-muted">Текущая картинка:</p>
+        <img src="{{ post.preview_image.url }}" class="img-thumbnail" style="max-height: 100px;" alt="Current">
+      {% endif %}
+
+      {% if form.preview_image.errors %}
+        <div class="text-danger">{{ form.preview_image.errors }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Поле: Публикация (Чекбокс) -->
+    <div class="mb-3 form-check">
+      {{ form.is_published }} {{ form.is_published.label_tag }}
+      {% if form.is_published.errors %}
+        <div class="text-danger">{{ form.is_published.errors }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {% if post %}Сохранить изменения{% else %}Опубликовать{% endif %}
+    </button>
+  </form>
+
+  <br>
+  <a href="{% url 'blog_list' %}" class="btn btn-secondary">Отмена</a>
+{% endblock %}

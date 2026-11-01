@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Вы уверены, что хотите удалить эту статью?</h1>
+
+  <p>Статья "<strong>{{ object.title }}</strong>" будет удалена безвозвратно.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background-color: red; color: white; padding: 10px 20px; border: none; cursor: pointer;">Да, удалить</button>
+    <a href="{% url 'blog_detail' object.pk %}" style="margin-left: 10px;">Отмена</a>
+  </form>
+{% endblock %}
