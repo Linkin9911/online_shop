@@ -9,6 +9,9 @@ class BlogPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     date_hierarchy = 'created_at'
 
+    # ✅ Выносим readonly_fields на верхний уровень
+    readonly_fields = ('views', 'created_at')
+
     # Поля, которые будут видны при редактировании
     fieldsets = (
         ('Основное', {
@@ -21,6 +24,6 @@ class BlogPostAdmin(admin.ModelAdmin):
         ('Статистика', {
             'fields': ('views', 'created_at'),
             'classes': ('collapse',),
-            'readonly_fields': ('views', 'created_at')
+            # ❌ Удаляем 'readonly_fields' отсюда — теперь он сверху
         }),
     )

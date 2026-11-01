@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('catalog.urls')),
-    path('blogs/', include('blog.urls')),  # <-- Подключаем URL-ы блога по адресу /blogs/
+    # ИСПРАВЛЕНИЕ: Пустая строка '', так как префикс 'blogs/' уже есть внутри blog/urls.py
+    path('', include('blog.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
