@@ -1,19 +1,29 @@
-from django.shortcuts import render
-from django.contrib import messages
-from .forms import ContactForm
+from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
+from .models import Product
+from django.shortcuts import render, redirect
+from .forms import ProductForm
 
 
 def home(request):
-    return render(request, 'catalog/home.html')
+    products = Product.objects.all()
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'catalog/home.html', {'page_obj': page_obj})
+
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'catalog/product_detail.html', {'product': product})
 
 
-def contacts(request):
+def add_product(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)  # Важно: request.FILES для картинок!
         if form.is_valid():
-            name = form.cleaned_data['name']
-            messages.success(request, f'Спасибо, {name}! Ваше сообщение отправлено.')
+            form.save()
+            return redirect('catalog')  # Перенаправляем обратно в каталог
     else:
-        form = ContactForm()
-    return render(request, 'catalog/contacts.html', {'form': form})
+        form = ProductForm()
 
+    return render(request, 'catalog/add_product.html', {'form': form})

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}  <!-- <--- ЭТА СТРОКА ОБЯЗАТЕЛЬНА! -->
+    <meta charset="UTF-8">
+    <title>{% block title %}Мой магазин{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Online Shop</h1>
+        <!-- Сюда мы будем подгружать меню из отдельного файла -->
+        {% include 'catalog/_menu.html' %}
+    </header>
+
+    <main>
+        <!-- Весь уникальный контент страниц будет появляться здесь -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Online Shop. Все права защищены.</p>
+    </footer>
+</body>
+</html>
