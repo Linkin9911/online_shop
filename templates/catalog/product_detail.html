@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ product.name }}</h1>
+
+  {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mb-3" style="max-width: 400px;">
+  {% endif %}
+
+  <p>{{ product.description }}</p>
+  <p class="fw-bold fs-4">{{ product.price }} ₽</p>
+  <p>
+    {% if product.is_published %}
+      <span class="badge bg-success">Опубликован</span>
+    {% else %}
+      <span class="badge bg-secondary">Черновик</span>
+    {% endif %}
+  </p>
+
+  <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">Редактировать</a>
+  <form method="post" action="{% url 'catalog:product_delete' product.pk %}" class="d-inline"
+        onsubmit="return confirm('Удалить продукт?');">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+  </form>
+  <a href="{% url 'catalog:product_list' %}" class="btn btn-link">← Назад к каталогу</a>
+{% endblock %}
