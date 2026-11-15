@@ -1,17 +1,8 @@
-# IDE
-.idea/
-
-# Virtual environment
-venv/
-env/
-
-# Python
+.env
 __pycache__/
 *.pyc
-
-# Database
-*.sqlite3
+.DS_Store
 db.sqlite3
-
-# Environment variables
-.env
+venv/
+.venv/
+media/
