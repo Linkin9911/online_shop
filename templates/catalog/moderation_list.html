@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Модерация продуктов{% endblock %}
+
+{% block content %}
+<h1>Модерация продуктов</h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Владелец</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td><a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a></td>
+            <td>{{ product.owner|default:"—" }}</td>
+            <td>
+                {% if product.is_published %}
+                    <span class="badge bg-success">Опубликован</span>
+                {% else %}
+                    <span class="badge bg-secondary">Не опубликован</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if product.is_published %}
+                    <form method="post" action="{% url 'catalog:product_unpublish' product.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">Снять с публикации</button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'catalog:product_publish' product.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-success btn-sm">Опубликовать</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Продуктов пока нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
