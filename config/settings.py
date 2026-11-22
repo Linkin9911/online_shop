@@ -136,3 +136,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'linkin9911@gmail.com'
 
+# Авторизация: куда вести анонима с закрытой страницы и после успешного входа
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'catalog:home'
