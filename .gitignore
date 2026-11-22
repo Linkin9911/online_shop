@@ -13,5 +13,7 @@ __pycache__/
 *.sqlite3
 db.sqlite3
 
-# Environment variables
 .env
+.venv/
+media/
+

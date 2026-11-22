@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+{% if product.image %}
+<img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid mb-3">
+{% endif %}
+<p>{{ product.description|default:'Описание не указано.' }}</p>
+<p><strong>Цена:</strong> {{ product.price }} руб.</p>
+<a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">Редактировать</a>
+<a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
+<a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">К списку</a>
+{% endblock %}

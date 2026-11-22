@@ -1,4 +1,6 @@
 from django import forms
+from .models import Product
+
 
 
 class ContactForm(forms.Form):
@@ -15,3 +17,10 @@ class ContactForm(forms.Form):
         label='Сообщение',
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
     )
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'price', 'image')
+
