@@ -3,7 +3,11 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 
 from config.settings import DEFAULT_FROM_EMAIL
-from users.forms import UserRegisterForm, UserLoginForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+from users.forms import UserRegisterForm, UserLoginForm, UserProfileForm
+
 
 
 def register(request):
@@ -56,3 +60,14 @@ def user_logout(request):
     logout(request)
     return redirect('catalog:home')
 
+@login_required
+def profile_edit(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Профиль обновлён.')
+            return redirect('users:profile')
+    else:
+        form = UserProfileForm(instance=request.user)
+    return render(request, 'users/profile_edit.html', {'form': form})
